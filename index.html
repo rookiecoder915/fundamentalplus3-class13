@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colombo Americano Cali - Class 13</title>
+    <style>
+        :root {
+            --color-primary: #1E3A8A;
+            --color-primary-hover: #1E40AF;
+            --color-secondary: #047857;
+            --color-accent: #D97706;
+            --color-bg-base: #F3F4F6;
+            --color-bg-surface: #FFFFFF;
+            --color-text-main: #1F2937;
+            --color-text-muted: #4B5563;
+            --color-border: #E5E7EB;
+            --color-success: #10B981;
+            --color-error: #EF4444;
+            
+            --font-main: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.25rem;
+            --font-size-xl: 1.5rem;
+            
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+            
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: var(--font-main);
+            background-color: var(--color-bg-base);
+            color: var(--color-text-main);
+            line-height: 1.6;
+        }
+
+        .app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-md);
+        }
+
+        .header-main {
+            background-color: var(--color-primary);
+            color: var(--color-bg-surface);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--spacing-md);
+            box-shadow: var(--shadow-md);
+        }
+
+        .header-title { font-size: var(--font-size-xl); font-weight: 700; margin-bottom: var(--spacing-xs); }
+        .header-subtitle { font-size: var(--font-size-lg); opacity: 0.9; }
+        
+        .objectives-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: var(--spacing-sm);
+            border-radius: var(--radius-md);
+            margin-top: var(--spacing-sm);
+        }
+        .objectives-title { font-weight: bold; margin-bottom: var(--spacing-xs); }
+        .objectives-list { margin-left: var(--spacing-lg); }
+
+        .tab-nav {
+            display: flex;
+            gap: var(--spacing-xs);
+            margin-bottom: var(--spacing-md);
+            overflow-x: auto;
+            padding-bottom: var(--spacing-xs);
+        }
+
+        .tab-btn {
+            background-color: var(--color-border);
+            color: var(--color-text-main);
+            border: none;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            white-space: nowrap;
+        }
+        .tab-btn:hover { background-color: #D1D5DB; }
+        .tab-btn.active { background-color: var(--color-primary); color: var(--color-bg-surface); }
+
+        .tab-content {
+            display: none;
+            background-color: var(--color-bg-surface);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            color: var(--color-primary);
+            margin-bottom: var(--spacing-md);
+            border-bottom: 2px solid var(--color-border);
+            padding-bottom: var(--spacing-xs);
+        }
+
+        .instruction-text {
+            font-size: var(--font-size-base);
+            color: var(--color-text-muted);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .bridge-text {
+            background-color: #E0E7FF;
+            padding: var(--spacing-md);
+            border-left: 5px solid var(--color-primary);
+            border-radius: var(--radius-sm);
+            margin-bottom: var(--spacing-lg);
+            font-style: italic;
+            font-weight: 500;
+            color: var(--color-primary);
+        }
+
+        .btn-action {
+            background-color: var(--color-secondary);
+            color: var(--color-bg-surface);
+            border: none;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-base);
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: var(--spacing-sm);
+            transition: opacity 0.2s;
+        }
+        .btn-action:hover { opacity: 0.9; }
+        .btn-small { padding: 5px 10px; font-size: 0.9rem; }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--color-primary);
+            border: 2px solid var(--color-primary);
+        }
+        .btn-outline:hover { background-color: var(--color-primary); color: white; }
+
+        .select-input {
+            padding: var(--spacing-xs);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: inherit;
+            background-color: var(--color-bg-base);
+            margin: 2px 0;
+        }
+
+        .qa-card {
+            border: 1px solid var(--color-border);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-md);
+            background-color: #FAFAFA;
+        }
+
+        .challenge-card {
+            border: 2px dashed var(--color-accent);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            background-color: #FFFBEB;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .sample-box {
+            background-color: #FEF3C7;
+            border-left: 5px solid var(--color-accent);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-sm);
+            margin-top: var(--spacing-md);
+        }
+
+        .item-btn {
+            background-color: var(--color-bg-surface);
+            border: 1px solid var(--color-border);
+            padding: var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .item-btn:hover { background-color: var(--color-bg-base); }
+        .item-btn.selected { background-color: var(--color-secondary); color: white; border-color: var(--color-secondary); }
+
+        .room-designer-container {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+        .room-canvas {
+            flex: 1;
+            min-width: 300px;
+            min-height: 200px;
+            border: 3px solid var(--color-text-muted);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-sm);
+            background-color: #f0fdf4;
+            display: flex;
+            flex-wrap: wrap;
+            align-content: flex-start;
+            gap: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .certainty-meter {
+            display: flex;
+            align-items: stretch;
+            height: 100px;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-bottom: var(--spacing-lg);
+            color: white;
+            font-weight: bold;
+            text-align: center;
+        }
+        .meter-section {
+            padding: var(--spacing-sm);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .meter-50 { background-color: #F59E0B; width: 40%; }
+        .meter-80 { background-color: #3B82F6; width: 30%; }
+        .meter-100 { background-color: #10B981; width: 30%; }
+        
+        .feedback-msg { font-weight: bold; margin-top: 10px; }
+        .correct { color: var(--color-success); }
+        .incorrect { color: var(--color-error); }
+
+        /* Crystal Ball Game Styles */
+        .crystal-ball-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .crystal-card {
+            background-color: #1E3A8A;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Quick-Fire Timer */
+        .timer-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--color-error);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 0 auto;
+        }
+
+        /* Plot Twist Generator */
+        .plot-twist-box {
+            background-color: #8B5CF6;
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 20px;
+            box-shadow: 0 10px 15px -3px rgba(139, 92, 246, 0.5);
+            display: none;
+            animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <header class="header-main">
+        <div class="header-title">Colombo Americano Cali</div>
+        <div class="header-subtitle">Fundamental Plus 3 - Class 13: Future Living</div>
+        <div class="objectives-box">
+            <div class="objectives-title">🎯 Class Objectives:</div>
+            <ul class="objectives-list">
+                <li>Finish the Rebuilding Blueprint speaking project.</li>
+                <li>Evaluate the pros and cons of living with roommates vs. living alone.</li>
+                <li>Distinguish between /aʊ/ and /oʊ/ vowel sounds.</li>
+                <li>Express future possibilities and certainties (may, might, could, probably, definitely).</li>
+            </ul>
+        </div>
+    </header>
+
+    <nav class="tab-nav">
+        <button class="tab-btn active" onclick="openTab('tab-warmup')">1. Urban Survival Games</button>
+        <button class="tab-btn" onclick="openTab('tab-project')">2. Project Presentations</button>
+        <button class="tab-btn" onclick="openTab('tab-vocab')">3. Roommates Vocab & Listen</button>
+        <button class="tab-btn" onclick="openTab('tab-grammar')">4. Grammar: Possibility</button>
+        <button class="tab-btn" onclick="openTab('tab-speak')">5. Speaking: Time Capsule</button>
+    </nav>
+
+    <main>
+        <section id="tab-warmup" class="tab-content active">
+            <h2 class="section-title">🏆 Warm-up: Urban Survival (Gamified)</h2>
+            <div class="bridge-text">
+                Welcome back! Before we present our final blueprints, let's get our brains activated with some upgraded housing logic challenges. Can you survive the ultimate moving day?
+            </div>
+
+            <div class="challenge-card">
+                <h3 style="color: var(--color-accent);">Level 1A: Packing Panic! (Mega Edition)</h3>
+                <p>You are moving into a tiny <strong>micro-unit</strong> today. You can only keep <strong>5 items</strong> from this massive list. Choose wisely and prepare to defend your choices to your partner!</p>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px;" id="packing-list">
+                    <button class="item-btn" onclick="toggleItem(this, 'pack')">Huge Dining Table</button>
+                    <button class="item-btn" onclick="toggleItem(this, 'pack')">Foldable Desk</button>
+                    <button class="item-btn" onclick="toggleItem(this, 'pack')">Air Fryer</button>
+                    <button class="item-btn" onclick="toggleItem(this, 'pack')">VR Headset</button>
+                    <button class="item-btn" onclick="toggleItem(this, 'pack')">Desktop PC & 3 Monitors</button>
+                    <button class="item-btn" onclick="toggleItem(this, 'pack')">Piano</button>
+                    <button class="item-btn" onclick="toggleItem(this, 'pack')">Espresso Machine</button>
+                    <button class="item-btn" onclick="toggleItem(this, 'pack')">King-Size Bed</button>
+                    <button class="item-btn" onclick="toggleItem(this, 'pack')">Bicycle</button>
+                    <button class="item-btn" onclick="toggleItem(this, 'pack')">Yoga Mat</button>
+                    <button class="item-btn" onclick="toggleItem(this, 'pack')">Mini-Fridge</button>
+                    <button class="item-btn" onclick="toggleItem(this, 'pack')">Treadmill</button>
+                    <button class="item-btn" onclick="toggleItem(this, 'pack')">Acoustic Guitar</button>
+                    <button class="item-btn" onclick="toggleItem(this, 'pack')">Vintage Record Player</button>
+                    <button class="item-btn" onclick="toggleItem(this, 'pack')">Washing Machine</button>
+                    <button class="item-btn" onclick="toggleItem(this, 'pack')">50-inch Smart TV</button>
+                    <button class="item-btn" onclick="toggleItem(this, 'pack')">Pet Snake (in terrarium)</button>
+                    <button class="item-btn" onclick="toggleItem(this, 'pack')">Sofa-bed</button>
+                    <button class="item-btn" onclick="toggleItem(this, 'pack')">Microwave</button>
+                    <button class="item-btn" onclick="toggleItem(this, 'pack')">Gaming Chair</button>
+                    <button class="item-btn" onclick="toggleItem(this, 'pack')">Dumbbells</button>
+                    <button class="item-btn" onclick="toggleItem(this, 'pack')">Skateboard</button>
+                    <button class="item-btn" onclick="toggleItem(this, 'pack')">Surfboard</button>
+                    <button class="item-btn" onclick="toggleItem(this, 'pack')">Sewing Machine</button>
+                    <button class="item-btn" onclick="toggleItem(this, 'pack')">Telescope</button>
+                    <button class="item-btn" onclick="toggleItem(this, 'pack')">Bonsai Tree</button>
+                    <button class="item-btn" onclick="toggleItem(this, 'pack')">Bean Bag Chair</button>
+                    <button class="item-btn" onclick="toggleItem(this, 'pack')">Record Collection</button>
+                    <button class="item-btn" onclick="toggleItem(this, 'pack')">Projector</button>
+                    <button class="item-btn" onclick="toggleItem(this, 'pack')">Hammock</button>
+                </div>
+                <p id="pack-counter" style="margin-top: 10px; font-weight: bold; color: var(--color-primary);">Selected: 0 / 5</p>
+            </div>
+
+            <div class="challenge-card" style="border-color: var(--color-secondary); background-color: #D1FAE5;">
+                <h3 style="color: var(--color-secondary);">Level 1B: The Dream Room Designer</h3>
+                <p>You have a budget for exactly <strong>6 pieces of furniture</strong>. First, select which room you want to design, then pick your items!</p>
+                
+                <div style="margin-bottom: 15px; display: flex; gap: 10px;">
+                    <button class="btn-action btn-outline btn-small" onclick="selectRoom('Living Room')">🛋️ Living Room</button>
+                    <button class="btn-action btn-outline btn-small" onclick="selectRoom('Bedroom')">🛏️ Bedroom</button>
+                    <button class="btn-action btn-outline btn-small" onclick="selectRoom('Home Office')">💻 Home Office</button>
+                </div>
+
+                <div class="room-designer-container">
+                    <div style="flex: 1; min-width: 250px;">
+                        <h4><span id="current-room-title">Living Room</span> Catalog:</h4>
+                        <div style="display: flex; gap: 5px; flex-wrap: wrap; margin-top: 10px;" id="catalog">
+                            <!-- Populated by JS -->
+                        </div>
+                        <button class="btn-action btn-small" style="background-color: var(--color-error); margin-top: 15px;" onclick="clearRoom()">Clear Room</button>
+                    </div>
+                    <div class="room-canvas" id="room-canvas">
+                        <span style="color: var(--color-text-muted); width: 100%; text-align: center;" id="room-empty-text">Select items from the catalog...</span>
+                    </div>
+                </div>
+                <p id="room-counter" style="margin-top: 10px; font-weight: bold;">Items: 0 / 6</p>
+            </div>
+            
+            <div class="challenge-card" style="border-color: var(--color-primary); background-color: #E0E7FF;">
+                <h3 style="color: var(--color-primary);">Level 2: The Fortune Teller (Grammar Fix)</h3>
+                <p>Madame Future is predicting your life, but her grammar is terrible! Fix her predictions.</p>
+                <ol style="margin-left: 20px; line-height: 1.8; margin-top: 15px;">
+                    <li>"Next week, you <em>are go to rent</em> an apartment." 
+                        <select class="select-input" id="ft1"><option value="">--fix it--</option><option value="wrong">will rent</option><option value="correct">are going to rent</option></select> (Intention)</li>
+                    <li>"It <em>will raining</em> very hard tomorrow." 
+                        <select class="select-input" id="ft2"><option value="">--fix it--</option><option value="correct">is going to rain</option><option value="wrong">rains</option></select> (Prediction based on Evidence)</li>
+                    <li>"Tomorrow at 8 AM, the architects <em>is going to meeting</em> you." 
+                        <select class="select-input" id="ft3"><option value="">--fix it--</option><option value="correct">are meeting</option><option value="wrong">will meet</option></select> (Fixed Arrangement)</li>
+                    <li>"You need help moving boxes? I <em>am helping</em> you right now!" 
+                        <select class="select-input" id="ft4"><option value="">--fix it--</option><option value="correct">will help</option><option value="wrong">going to help</option></select> (Sudden Decision)</li>
+                </ol>
+                <button class="btn-action" onclick="checkFortune()">Check Predictions</button>
+                <div id="fortune-feedback" class="feedback-msg"></div>
+            </div>
+        </section>
+
+        <section id="tab-project" class="tab-content">
+            <h2 class="section-title">🏗️ Project: The Rebuilding Blueprint</h2>
+            <div class="bridge-text">
+                Last class, you started planning an amazing housing project for our city. Now it is time to pitch your ideas to the City Council! 
+            </div>
+
+            <div class="qa-card" style="border-left: 5px solid var(--color-secondary);">
+                <h3 style="color: var(--color-secondary); margin-bottom: 10px;">📝 Presentation Checklist:</h3>
+                <ul style="margin-left: 20px; margin-bottom: 15px; line-height: 1.8;">
+                    <li><strong>The Housing Type:</strong> (Micro-units, half-houses, traditional apartments).</li>
+                    <li><strong>Safety & Construction:</strong> (Materials, sturdy foundations).</li>
+                    <li><strong>Amenities:</strong> (Parks, shared laundry, etc.).</li>
+                    <li><strong>Grammar Requirement:</strong> Use at least 3 Future Forms (will, going to, present progressive, simple present).</li>
+                    <li><strong>Interaction:</strong> End by asking the class: <em>"What do you think of our blueprint?"</em></li>
+                </ul>
+
+                <button class="btn-action" style="background-color: var(--color-text-muted);" onclick="document.getElementById('sample-pitch').style.display = 'block'">👁️ View Sample Pitch</button>
+                
+                <div id="sample-pitch" class="sample-box" style="display: none;">
+                    <h4 style="margin-bottom: 10px;">🏢 Sample: "The Hope Valley Project"</h4>
+                    <p><em>"Good morning, City Council. We <strong>are going to build</strong> a complex of half-houses combined with sturdy micro-units. Construction <strong>starts</strong> on December 1st. Many old buildings collapsed, so we <strong>will use</strong> reinforced concrete foundations. We believe this new architecture <strong>will withstand</strong> future earthquakes easily. We <strong>are including</strong> great shared amenities, like a community garden. Next Tuesday, we <strong>are meeting</strong> with the local government. What do you think about our blueprint?"</em></p>
+                </div>
+            </div>
+
+            <h3 style="text-align: center; margin-top: var(--spacing-lg); color: var(--color-primary); font-size: 2rem;">It is your time to present! 🎤</h3>
+        </section>
+
+        <section id="tab-vocab" class="tab-content">
+            <h2 class="section-title">🔑 Vocabulary & Listening: Living Together</h2>
+            <div class="bridge-text">
+                Excellent job on your presentations! Moving into Lesson 2: As housing gets more expensive, many adults choose to share their living spaces. Let's look at the language of roommates.
+            </div>
+
+            <div class="qa-card">
+                <h3>Match the definitions</h3>
+                <p class="instruction-text">Complete the sentences with the correct real estate and living terms.</p>
+                <ol style="margin-left: 20px; line-height: 2;">
+                    <li>If you want to find a place to live, you need to go <select class="select-input" id="v1"><option value="">--choose--</option><option value="wrong">housemate</option><option value="correct">apartment hunting</option></select>.</li>
+                    <li>If you rent a single room inside a house with other people, you have a <select class="select-input" id="v2"><option value="">--choose--</option><option value="correct">housemate</option><option value="wrong">landlord</option></select>.</li>
+                    <li>If you share a bedroom or a small apartment with someone, you have a <select class="select-input" id="v3"><option value="">--choose--</option><option value="wrong">housemate</option><option value="correct">roommate</option></select>.</li>
+                    <li>When you live with people, you usually divide the cost of internet and electricity. This is called <select class="select-input" id="v4"><option value="">--choose--</option><option value="wrong">security deposit</option><option value="correct">sharing the bills</option></select>.</li>
+                    <li>Taking turns cleaning the kitchen means you <select class="select-input" id="v5"><option value="">--choose--</option><option value="correct">share the chores</option><option value="wrong">split the rent</option></select>.</li>
+                    <li>An apartment that has the kitchen, bedroom, and living room all in one open space is a <select class="select-input" id="v6"><option value="">--choose--</option><option value="correct">studio apartment</option><option value="wrong">micro-unit</option></select>.</li>
+                    <li>Before you move in, the landlord usually asks for a <select class="select-input" id="v8"><option value="">--choose--</option><option value="wrong">lease</option><option value="correct">security deposit</option></select>.</li>
+                </ol>
+                <button class="btn-action" onclick="checkVocab()">Check Vocab</button>
+                <div id="vocab-feedback" class="feedback-msg"></div>
+            </div>
+
+            <div class="qa-card" style="text-align: center; background-color: var(--color-primary); color: white;">
+                <h3>📖 Textbook Time: Listening</h3>
+                <p style="font-size: 1.1rem; margin: 10px 0;">Please open your textbooks to <strong>Page 90</strong>.</p>
+                <p>We will listen to <strong>Track 9.02</strong>. Listen carefully to Ashley and Ethan to determine their <em>attitude</em> towards their living situations.</p>
+            </div>
+
+            <div class="qa-card" style="border-left: 5px solid var(--color-secondary);">
+                <h3 style="color: var(--color-secondary);">🗣️ Follow-up: The Roommate Interview</h3>
+                <p><strong>Roleplay:</strong> Student A has a great apartment but needs a roommate to share the bills. Student B is apartment hunting. Have an "interview" to see if you are a good match!</p>
+                <ul style="margin-left: 20px;">
+                    <li>How will you share the chores?</li>
+                    <li>What time do you usually sleep/wake up?</li>
+                    <li>Are you messy or clean?</li>
+                </ul>
+            </div>
+
+            <h3 style="margin-top: var(--spacing-lg);">🗣️ Pronunciation: /aʊ/ vs /oʊ/</h3>
+            <p class="instruction-text">Click a word, then click the correct category box to drop it in. Say the word out loud!</p>
+            
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px;" id="pronun-words">
+                <button class="item-btn btn-small" onclick="selectPronunWord(this)">allow</button>
+                <button class="item-btn btn-small" onclick="selectPronunWord(this)">sound</button>
+                <button class="item-btn btn-small" onclick="selectPronunWord(this)">found</button>
+                <button class="item-btn btn-small" onclick="selectPronunWord(this)">below</button>
+                <button class="item-btn btn-small" onclick="selectPronunWord(this)">know</button>
+                <button class="item-btn btn-small" onclick="selectPronunWord(this)">now</button>
+                <button class="item-btn btn-small" onclick="selectPronunWord(this)">own</button>
+                <button class="item-btn btn-small" onclick="selectPronunWord(this)">phone</button>
+            </div>
+            
+            <div style="display: flex; gap: var(--spacing-md);">
+                <div class="qa-card" style="flex: 1; min-height: 120px; cursor: pointer; border: 2px dashed #3B82F6;" onclick="placePronunWord('aʊ')">
+                    <h4 style="text-align: center; color: #3B82F6;">/aʊ/ like "house"</h4>
+                    <div id="box-aʊ" style="display: flex; gap: 5px; flex-wrap: wrap; margin-top: 10px;"></div>
+                </div>
+                <div class="qa-card" style="flex: 1; min-height: 120px; cursor: pointer; border: 2px dashed #10B981;" onclick="placePronunWord('oʊ')">
+                    <h4 style="text-align: center; color: #10B981;">/oʊ/ like "go"</h4>
+                    <div id="box-oʊ" style="display: flex; gap: 5px; flex-wrap: wrap; margin-top: 10px;"></div>
+                </div>
+            </div>
+            <button class="btn-action" onclick="checkPronun()">Check Sounds</button>
+            <div id="pronun-feedback" class="feedback-msg"></div>
+        </section>
+
+        <section id="tab-grammar" class="tab-content">
+            <h2 class="section-title">⚙️ Grammar: Possibility and Certainty</h2>
+            <div class="bridge-text">
+                We have used *will* and *going to* for things we are sure about. But what if we don't know the future? What if you are only 50% sure?
+            </div>
+
+            <h3>The Certainty Meter</h3>
+            <div class="certainty-meter">
+                <div class="meter-section meter-50">
+                    <span style="font-size: 1.2rem;">50%</span>
+                    <span>Maybe</span>
+                    <span style="font-size: 0.9rem;">(may, might, could)</span>
+                </div>
+                <div class="meter-section meter-80">
+                    <span style="font-size: 1.2rem;">80% - 90%</span>
+                    <span>Almost Sure</span>
+                    <span style="font-size: 0.9rem;">(probably won't / will probably)</span>
+                </div>
+                <div class="meter-section meter-100">
+                    <span style="font-size: 1.2rem;">100%</span>
+                    <span>Very Sure</span>
+                    <span style="font-size: 0.9rem;">(will definitely / definitely won't)</span>
+                </div>
+            </div>
+
+            <div class="qa-card">
+                <h3>Practice: Identify the Certainty</h3>
+                <ol style="margin-left: 20px; line-height: 2;">
+                    <li>"I might still be at home with Mom and Dad." (Certainty: <select class="select-input" id="g1"><option value="">--choose--</option><option value="correct">50%</option><option value="wrong">100%</option></select>)</li>
+                    <li>"I probably won’t have enough money for a house." (Certainty: <select class="select-input" id="g2"><option value="">--choose--</option><option value="wrong">50%</option><option value="correct">80%</option></select>)</li>
+                    <li>"I will definitely miss my family!" (Certainty: <select class="select-input" id="g3"><option value="">--choose--</option><option value="correct">100%</option><option value="wrong">50%</option></select>)</li>
+                </ol>
+            </div>
+
+            <div class="challenge-card" style="background-color: #EFF6FF; border-color: #3B82F6;">
+                <h3 style="color: #1E3A8A;">🔮 Mini-Game: The Crystal Ball (20 Predictions)</h3>
+                <p>Read the future scenario and the probability percentage. Choose the correct adverb to complete the sentence!</p>
+                <div class="crystal-ball-grid" id="crystal-grid">
+                    <!-- Populated dynamically by JS -->
+                </div>
+                <button class="btn-action" style="margin-top: 15px;" onclick="checkCrystalBall()">Check Predictions</button>
+                <div id="crystal-feedback" class="feedback-msg"></div>
+            </div>
+
+            <div class="qa-card" style="text-align: center; border: 2px solid var(--color-error);">
+                <h3 style="color: var(--color-error);">⏱️ 60-Second Quick-Fire Speaking</h3>
+                <p>Start the timer! You have 60 seconds to answer as many of these 10 questions out loud as you can.</p>
+                <div class="timer-circle" id="qf-timer">60</div>
+                <button class="btn-action" style="background-color: var(--color-error);" onclick="startQuickFire()">Start Timer</button>
+                <div id="qf-feedback" class="feedback-msg" style="color: var(--color-error); font-size: 1.2rem; margin-top: 10px;"></div>
+                <ul style="text-align: left; margin-top: 15px; font-weight: bold; font-size: 1.1rem; line-height: 1.8;">
+                    <li>1. What is something you MIGHT do tonight?</li>
+                    <li>2. What is something you WILL DEFINITELY NOT eat this week?</li>
+                    <li>3. Where WILL you PROBABLY be in 5 years?</li>
+                    <li>4. What is a skill you MIGHT learn next year?</li>
+                    <li>5. Who is someone you WILL DEFINITELY see this weekend?</li>
+                    <li>6. What is a place you PROBABLY WON'T visit anytime soon?</li>
+                    <li>7. What is a movie or show you MIGHT watch tonight?</li>
+                    <li>8. What is something you WILL PROBABLY buy this month?</li>
+                    <li>9. What is a hobby you DEFINITELY WON'T try?</li>
+                    <li>10. What is a goal you MIGHT achieve by December?</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="tab-speak" class="tab-content">
+            <h2 class="section-title">🚀 Speaking: Time Capsule 2030</h2>
+            
+            <p class="instruction-text">It is the year 2030. Design your future persona. What will your life be like? Write your predictions using the adverbs of certainty, then share with your partner.</p>
+            
+            <div class="qa-card" style="background-color: white;">
+                <h3 style="margin-bottom: 15px; color: var(--color-secondary);">My Future Persona:</h3>
+                <div style="margin-bottom: 15px;">
+                    <strong>🏠 Housing:</strong> (Where will you live? With who?)<br>
+                    <input type="text" class="select-input" style="width: 100%; margin-top: 5px;" placeholder="e.g., I will probably live in a studio apartment downtown.">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <strong>💼 Career/Studies:</strong> (What will you be doing?)<br>
+                    <input type="text" class="select-input" style="width: 100%; margin-top: 5px;" placeholder="e.g., I might be managing my own business.">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <strong>🌴 Lifestyle:</strong> (Hobbies, travel, free time?)<br>
+                    <input type="text" class="select-input" style="width: 100%; margin-top: 5px;" placeholder="e.g., I will definitely travel to Europe every summer.">
+                </div>
+            </div>
+
+            <div class="challenge-card" style="border-color: #8B5CF6; background-color: #F5F3FF; text-align: center;">
+                <h3 style="color: #8B5CF6;">⚡ The PLOT TWIST Generator</h3>
+                <p>Life rarely goes exactly as planned. Click the button to receive a random "Plot Twist" life event. You must explain to your partner how this event <em>might</em> or <em>will probably</em> change your 2030 predictions!</p>
+                
+                <button class="btn-action" style="background-color: #8B5CF6; font-size: 1.2rem; padding: 15px 30px;" onclick="generatePlotTwist()">Give me a Plot Twist!</button>
+                
+                <div id="plot-twist-display" class="plot-twist-box">
+                    <!-- Text injected by JS -->
+                </div>
+            </div>
+
+            <div style="background-color: white; padding: 15px; border: 1px solid var(--color-border); border-radius: 8px; margin-top: 15px;">
+                <h4 style="color: var(--color-accent); margin-bottom: 5px;">🛡️ Confident Communicator: Asking for Reasons</h4>
+                <p>When your partner tells you their plans or plot twist, keep the conversation going!</p>
+                <ul style="margin-left: 20px; font-weight: bold;">
+                    <li>"Wow, really? Why do you think that?"</li>
+                    <li>"Why do you say that?"</li>
+                    <li>"How will you manage that?"</li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<script>
+    // Tab Navigation
+    function openTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    // Level 1A: Packing Panic
+    let selectedPackItems = 0;
+    function toggleItem(btn, type) {
+        if(type === 'pack') {
+            if(btn.classList.contains('selected')) {
+                btn.classList.remove('selected');
+                selectedPackItems--;
+            } else {
+                if(selectedPackItems < 5) {
+                    btn.classList.add('selected');
+                    selectedPackItems++;
+                } else {
+                    const counter = document.getElementById('pack-counter');
+                    counter.textContent = "You can only keep 5 items! Deselect one first.";
+                    counter.style.color = "var(--color-error)";
+                    setTimeout(() => {
+                        counter.textContent = `Selected: ${selectedPackItems} / 5`;
+                        counter.style.color = "var(--color-primary)";
+                    }, 2000);
+                }
+            }
+            document.getElementById('pack-counter').textContent = `Selected: ${selectedPackItems} / 5`;
+            if(selectedPackItems === 5) document.getElementById('pack-counter').style.color = "var(--color-success)";
+            else document.getElementById('pack-counter').style.color = "var(--color-primary)";
+        }
+    }
+
+    // Level 1B: Room Designer
+    let roomItems = 0;
+    const catalogs = {
+        'Living Room': ['Sofa 🛋️', 'TV 📺', 'Bookshelf 📚', 'Plant 🪴', 'Rug 🧶', 'Lamp 💡', 'Coffee Table ☕', 'Armchair 🪑', 'Art 🖼️', 'Bean Bag 🛋️', 'Fireplace 🔥', 'Sound System 🔊', 'Board Games 🎲', 'Floor Pillow 🛏️', 'Chandelier ✨'],
+        'Bedroom': ['King Bed 🛏️', 'Wardrobe 🚪', 'Nightstand 🪑', 'Mirror 🪞', 'Rug 🧶', 'Lamp 💡', 'Dresser 🗄️', 'Alarm Clock ⏰', 'Curtains 🪟', 'Vanity 🪞', 'Blackout Blinds 🕶️', 'Storage Bench 🪑', 'Ceiling Fan 🌀', 'Floor Lamp 💡', 'Humidifier 💨'],
+        'Home Office': ['Standing Desk 💻', 'Ergo Chair 💺', 'Dual Monitors 🖥️', 'Bookshelf 📚', 'Plant 🪴', 'Whiteboard 📋', 'Lamp 💡', 'Filing Cabinet 🗄️', 'Coffee Mug ☕', 'Mousepad 🖱️', 'Ergo Keyboard ⌨️', 'Webcam 📷', 'Microphone 🎙️', 'Corkboard 📌', 'Stress Ball 🥎']
+    };
+
+    function selectRoom(roomType) {
+        document.getElementById('current-room-title').textContent = roomType;
+        const catalogDiv = document.getElementById('catalog');
+        catalogDiv.innerHTML = '';
+        
+        catalogs[roomType].forEach(item => {
+            const btn = document.createElement('button');
+            btn.className = 'item-btn btn-small';
+            btn.textContent = item;
+            btn.onclick = () => addToRoom(item);
+            catalogDiv.appendChild(btn);
+        });
+
+        // Change canvas background color based on room
+        const canvas = document.getElementById('room-canvas');
+        if(roomType === 'Living Room') canvas.style.backgroundColor = '#f0fdf4';
+        if(roomType === 'Bedroom') canvas.style.backgroundColor = '#eff6ff';
+        if(roomType === 'Home Office') canvas.style.backgroundColor = '#fffbeb';
+        
+        clearRoom();
+    }
+
+    function addToRoom(item) {
+        if(roomItems >= 6) {
+            const counter = document.getElementById('room-counter');
+            counter.textContent = "Budget limit reached (6 max)!";
+            counter.style.color = "var(--color-error)";
+            setTimeout(() => {
+                counter.textContent = `Items: ${roomItems} / 6`;
+                counter.style.color = "black";
+            }, 2000);
+            return;
+        }
+        
+        if(roomItems === 0) document.getElementById('room-empty-text').style.display = 'none';
+        
+        const canvas = document.getElementById('room-canvas');
+        const newItem = document.createElement('div');
+        newItem.className = 'item-btn selected';
+        newItem.textContent = item;
+        canvas.appendChild(newItem);
+        roomItems++;
+        document.getElementById('room-counter').textContent = `Items: ${roomItems} / 6`;
+    }
+
+    function clearRoom() {
+        const canvas = document.getElementById('room-canvas');
+        canvas.innerHTML = '<span style="color: var(--color-text-muted); width: 100%; text-align: center;" id="room-empty-text">Select items from the catalog...</span>';
+        roomItems = 0;
+        document.getElementById('room-counter').textContent = `Items: ${roomItems} / 6`;
+    }
+    
+    // Initialize default room
+    selectRoom('Living Room');
+
+    // Level 2: Fortune Teller
+    function checkFortune() {
+        let score = 0;
+        for(let i=1; i<=4; i++){
+            if(document.getElementById('ft'+i).value === 'correct') score++;
+        }
+        const fb = document.getElementById('fortune-feedback');
+        if(score === 4) {
+            fb.textContent = "✅ Madame Future is cured! Perfect grammar.";
+            fb.className = "feedback-msg correct";
+        } else {
+            fb.textContent = `⚠️ You got ${score}/4. Discuss the rules in parentheses with your partner and try again.`;
+            fb.className = "feedback-msg incorrect";
+        }
+    }
+
+    // Vocab Check
+    function checkVocab() {
+        let score = 0;
+        const total = 7;
+        [1,2,3,4,5,6,8].forEach(i => {
+            if(document.getElementById('v'+i).value === 'correct') score++;
+        });
+        const fb = document.getElementById('vocab-feedback');
+        if(score === total) {
+            fb.textContent = "✅ You are ready to sign a lease! Perfect.";
+            fb.className = "feedback-msg correct";
+        } else {
+            fb.textContent = `⚠️ You got ${score}/${total}. Try again!`;
+            fb.className = "feedback-msg incorrect";
+        }
+    }
+
+    // Pronunciation Game
+    let activePronunWord = null;
+    const pronunAnswers = {
+        'allow': 'aʊ', 'sound': 'aʊ', 'found': 'aʊ', 'now': 'aʊ',
+        'below': 'oʊ', 'know': 'oʊ', 'own': 'oʊ', 'phone': 'oʊ'
+    };
+
+    function selectPronunWord(btn) {
+        if(activePronunWord) activePronunWord.style.borderColor = "var(--color-border)";
+        activePronunWord = btn;
+        btn.style.borderColor = "var(--color-accent)";
+        btn.style.borderWidth = "2px";
+    }
+
+    function placePronunWord(targetBox) {
+        if(!activePronunWord) return;
+        const box = document.getElementById('box-' + targetBox);
+        
+        const placed = document.createElement('div');
+        placed.className = 'item-btn btn-small';
+        placed.textContent = activePronunWord.textContent;
+        placed.dataset.word = activePronunWord.textContent;
+        box.appendChild(placed);
+        
+        activePronunWord.style.display = 'none';
+        activePronunWord = null;
+    }
+
+    function checkPronun() {
+        let score = 0;
+        let totalPlaced = 0;
+        ['aʊ', 'oʊ'].forEach(sound => {
+            const box = document.getElementById('box-' + sound);
+            Array.from(box.children).forEach(child => {
+                totalPlaced++;
+                if(pronunAnswers[child.dataset.word] === sound) {
+                    child.style.backgroundColor = "var(--color-success)";
+                    child.style.color = "white";
+                    score++;
+                } else {
+                    child.style.backgroundColor = "var(--color-error)";
+                    child.style.color = "white";
+                }
+            });
+        });
+        
+        const fb = document.getElementById('pronun-feedback');
+        if(totalPlaced < 8) {
+            fb.textContent = "Place all words before checking!";
+            fb.className = "feedback-msg incorrect";
+            return;
+        }
+        if(score === 8) {
+            fb.textContent = "✅ Perfect pronunciation sorting!";
+            fb.className = "feedback-msg correct";
+        } else {
+            fb.textContent = `⚠️ You got ${score}/8 correct. Red boxes are in the wrong group.`;
+            fb.className = "feedback-msg incorrect";
+        }
+    }
+
+    // Grammar Games
+    const crystalScenarios = [
+        { sc: "Getting a job in Tokyo.", p: "50%", pt: "#FBBF24", s: "I", e: "move to Japan.", ans: "might", opts: ["definitely will", "might", "probably won't"] },
+        { sc: "Buying a mansion next year.", p: "10%", pt: "#F87171", s: "I", e: "buy a mansion.", ans: "probably won't", opts: ["might not", "probably won't", "definitely will"] },
+        { sc: "Passing the final English exam.", p: "100%", pt: "#10B981", s: "I", e: "pass the exam!", ans: "will definitely", opts: ["will definitely", "could", "might not"] },
+        { sc: "Living with roommates to save money.", p: "85%", pt: "#3B82F6", s: "I", e: "share an apartment.", ans: "will probably", opts: ["may", "will probably", "definitely won't"] },
+        { sc: "Winning the lottery.", p: "0%", pt: "#EF4444", s: "I", e: "win the lottery.", ans: "definitely won't", opts: ["definitely won't", "might", "will probably"] },
+        { sc: "Ordering pizza tonight.", p: "50%", pt: "#FBBF24", s: "I", e: "order pizza.", ans: "may", opts: ["will definitely", "may", "probably won't"] },
+        { sc: "Moving to another city in 5 years.", p: "50%", pt: "#FBBF24", s: "I", e: "move away.", ans: "could", opts: ["could", "definitely won't", "will definitely"] },
+        { sc: "Retiring at age 30.", p: "5%", pt: "#F87171", s: "I", e: "retire that early.", ans: "probably won't", opts: ["will probably", "probably won't", "might"] },
+        { sc: "Learning a new language.", p: "80%", pt: "#3B82F6", s: "I", e: "study French.", ans: "will probably", opts: ["will probably", "might not", "definitely won't"] },
+        { sc: "Adopting a pet soon.", p: "50%", pt: "#FBBF24", s: "I", e: "get a dog.", ans: "might", opts: ["will definitely", "definitely won't", "might"] },
+        { sc: "Becoming a billionaire tomorrow.", p: "0%", pt: "#EF4444", s: "I", e: "be a billionaire.", ans: "definitely won't", opts: ["may", "definitely won't", "will probably"] },
+        { sc: "Visiting family this weekend.", p: "90%", pt: "#3B82F6", s: "I", e: "see my parents.", ans: "will probably", opts: ["might not", "probably won't", "will probably"] },
+        { sc: "Going to the gym today.", p: "50%", pt: "#FBBF24", s: "I", e: "work out.", ans: "might", opts: ["definitely won't", "might", "will definitely"] },
+        { sc: "Eating fast food for a week straight.", p: "10%", pt: "#F87171", s: "I", e: "do that.", ans: "probably won't", opts: ["probably won't", "will probably", "could"] },
+        { sc: "Buying a new phone this year.", p: "75%", pt: "#3B82F6", s: "I", e: "upgrade my phone.", ans: "will probably", opts: ["will probably", "might not", "definitely won't"] },
+        { sc: "Traveling to space.", p: "1%", pt: "#EF4444", s: "I", e: "go to space.", ans: "definitely won't", opts: ["definitely won't", "might", "will probably"] },
+        { sc: "Waking up early tomorrow.", p: "100%", pt: "#10B981", s: "I", e: "set an alarm.", ans: "will definitely", opts: ["might not", "will definitely", "probably won't"] },
+        { sc: "Getting married next year.", p: "50%", pt: "#FBBF24", s: "I", e: "get married.", ans: "might", opts: ["will definitely", "might", "definitely won't"] },
+        { sc: "Starting a business.", p: "40%", pt: "#FBBF24", s: "I", e: "open a shop.", ans: "might not", opts: ["might not", "will definitely", "probably won't"] },
+        { sc: "Changing careers.", p: "50%", pt: "#FBBF24", s: "I", e: "change my job.", ans: "may", opts: ["definitely won't", "may", "will definitely"] }
+    ];
+
+    function renderCrystalBall() {
+        const grid = document.getElementById('crystal-grid');
+        if (!grid) return;
+        grid.innerHTML = '';
+        crystalScenarios.forEach((item, index) => {
+            let optionsHtml = `<option value="">--choose--</option>`;
+            item.opts.forEach(opt => {
+                optionsHtml += `<option value="${opt === item.ans ? 'correct' : 'wrong'}">${opt}</option>`;
+            });
+            grid.innerHTML += `
+                <div class="crystal-card">
+                    <p><strong>Scenario:</strong> ${item.sc}</p>
+                    <p style="color: ${item.pt};">Probability: ${item.p}</p>
+                    <p>${item.s} <select class="select-input" id="cb${index+1}" style="color: black;">${optionsHtml}</select> ${item.e}</p>
+                </div>
+            `;
+        });
+    }
+
+    // Initialize the new 20-item grid
+    renderCrystalBall();
+
+    function checkCrystalBall() {
+        let score = 0;
+        for(let i=1; i<=20; i++){
+            const select = document.getElementById('cb'+i);
+            if(select && select.value === 'correct') score++;
+        }
+        const fb = document.getElementById('crystal-feedback');
+        if(score === 20) {
+            fb.textContent = "✅ The future is clear! Perfect accuracy (20/20).";
+            fb.className = "feedback-msg correct";
+        } else {
+            fb.textContent = `⚠️ You got ${score}/20. Check the certainty percentages!`;
+            fb.className = "feedback-msg incorrect";
+        }
+    }
+
+    let qfTimerInterval;
+    function startQuickFire() {
+        clearInterval(qfTimerInterval);
+        let timeLeft = 60;
+        const display = document.getElementById('qf-timer');
+        const feedback = document.getElementById('qf-feedback');
+        
+        display.textContent = timeLeft;
+        feedback.textContent = "";
+        
+        qfTimerInterval = setInterval(() => {
+            timeLeft--;
+            display.textContent = timeLeft;
+            if(timeLeft <= 0) {
+                clearInterval(qfTimerInterval);
+                display.textContent = "0";
+                display.style.animation = "none";
+                feedback.textContent = "⏰ Time is up! How many questions did you manage to answer?";
+            }
+        }, 1000);
+    }
+
+    // Plot Twist Generator
+    const twists = [
+        "👽 ALIENS LAND IN VALLE DEL CAUCA! How will your housing and lifestyle plans change?",
+        "💰 YOU WIN $10 MILLION DOLLARS! How will your career and housing plans change?",
+        "🤖 AI REPLACES YOUR CHOSEN CAREER! What will you probably do instead?",
+        "☕ COFFEE BECOMES ILLEGAL GLOBALLY! How will you definitely survive your mornings?",
+        "✈️ YOUR BOSS TRANSFERS YOU TO TOKYO NEXT MONTH! Where might you live? What will you do?",
+        "📵 THE INTERNET IS SHUT DOWN FOREVER! How will your lifestyle and hobbies change?"
+    ];
+
+    function generatePlotTwist() {
+        const display = document.getElementById('plot-twist-display');
+        const randomIndex = Math.floor(Math.random() * twists.length);
+        
+        // Remove and re-add animation class to re-trigger the bounce
+        display.style.animation = 'none';
+        display.offsetHeight; // trigger reflow
+        display.style.animation = null; 
+        
+        display.style.display = 'block';
+        display.innerHTML = `<h3 style="margin-bottom: 10px;">${twists[randomIndex]}</h3><p style="font-style: italic;">Explain to your partner how your plans <strong>might</strong> or <strong>will definitely</strong> change!</p>`;
+    }
+</script>
+
+</body>
+</html>
